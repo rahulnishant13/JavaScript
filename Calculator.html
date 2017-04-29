@@ -1,0 +1,210 @@
+<html>
+<head>
+<title>caculator</title>
+<style>
+td{"align:"center";"}
+</style>
+<script language="JavaScript">
+var memory="0";
+var operation= 0;
+var current="0";
+var maxlength=10;
+var ans="0";
+function EnterDigit(digit)
+{
+	if (current.length > maxlength)
+	{ 
+		current = "Error! Too long"; //limit length
+	}
+	else
+	{ 
+		if ((parseInt(current) == 0) && (current.indexOf(".") == -1))
+		{ 
+			current = digit;
+		} 
+		else
+		{
+			current = current + digit;
+		};
+    }; 
+   document.calculator.display.value = current;
+}
+
+function Clear()
+{
+	current="0";
+	document.calculator.display.value=current;	
+}
+
+function AllClear()
+{
+	current="0";
+	memory="0";
+	operation=0;
+	document.calculator.display.value=current;
+}
+
+function putDot()
+{
+	if (current.length == 0)
+	{
+		current = "0.";
+	}
+	else
+	{
+		if (current.indexOf(".") == -1)
+		{
+			current = current + ".";
+		};
+	};
+	document.calculator.display.value = current;
+}
+
+function Operation(sign)
+{
+	if(sign=='*')
+	{
+		operation=1;
+	}
+	if(sign=='/')
+	{
+		operation=2;
+	}
+	if(sign=='+')
+	{
+		operation=3;
+	}
+	if(sign=='-')
+	{
+		operation=4;
+	}
+	memory = current;
+	current = "";
+	document.calculator.display.value = current;	
+}
+
+function Inverse()
+{
+		var a=1;
+		ans=Math.pow(parseFloat(current),-1);
+		document.calculator.display.value=ans;
+}
+
+function Answer()
+{
+	if(operation==1)
+	{
+		ans= parseFloat(current) * parseFloat(memory);
+	}
+	if(operation==2)
+	{
+		if(parseInt(current) != 0)
+		{
+			ans=parseFloat(memory) / parseFloat(current);
+		}
+		else
+		{
+			ans="divide error"
+		}
+	}
+	if(operation==3)
+	{
+		ans=parseFloat(memory) + parseFloat(current);
+	}
+	if(operation==4)
+	{
+		ans=parseFloat(memory) - parseFloat(current);
+	}
+//	current=ans;
+	operation=0;
+	document.calculator.display.value=ans;
+}
+
+function SQRT()
+{
+	document.calculator.display.value=Math.sqrt(current);
+	current=Math.sqrt(current);
+}
+
+function ChangeSign()
+{
+	if(current.indexOf("-")=="0")
+	{
+		current=current.substring(1);
+	}
+	else
+	{
+		current="-" + current;
+	}
+	document.calculator.display.value=current;
+}
+
+function Percent()
+{
+	current=document.calculator.display.value;
+//	current= parseFloat(current)* parseFloat(memory);
+	if(operation==1)
+	{
+		current=parseFloat(current)/100;
+	}
+	else
+	{
+		current=parseFloat(current)/100;
+		current=parseFloat(current)*parseFloat(memory);
+	}
+}
+</script>
+</head>
+
+<body>
+<form name="calculator">
+<br>
+  <table border="5" align="center">
+	<tr><td width="284" height="200" >
+		<table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
+          <tr> 
+            <td colspan="5"><p align="center">Simple Calculator</p></td>
+          </tr>
+          <tr> 
+            <td colspan="5"> <input name="display" id="txt" type="text" size="40" maxlength="20"></td>
+          </tr>
+	  <tr>
+	    <td colspan="4" align="right"><input type="button" name="butAC" id="b5" value="  AC  " onClick="AllClear()"> </td>
+		<td><input type="button" name="butC2" id="butC" value="    C    " onClick="Clear()"></td>
+	  </tr>
+          <tr> 
+            <td > <input type="button" name="but1" id="b1" value="   1   " onClick="EnterDigit('1')"> </td>
+            <td > <input type="button" name="but2" id="b2" value="   2   " onClick="EnterDigit('2')"> </td>
+            <td > <input type="button" name="but3" id="b3" value="   3   " onClick="EnterDigit('3')"> </td>
+            <td > <input type="button" name="div" id="b4" value="    /    " onClick="Operation('/')">  </td>
+            <td > <input type="button" name="butAC" id="b5" value="   %    " onClick="Percent()"> </td>
+          </tr>
+          <tr> 
+            <td> <input type="button" name="but4" id="b6" value="   4   " onClick="EnterDigit('4')"> </td>
+            <td> <input type="button" name="but5" id="b7" value="   5   " onClick="EnterDigit('5')"> </td>
+            <td> <input type="button" name="but6" id="b8" value="   6   " onClick="EnterDigit('6')"> </td>
+            <td> <input type="button" name="mul" id="b9" value="    *    " onClick="Operation('*')"> </td>
+            <td> <input type="button" name="butC" id="b10" value="   1/x  " onClick="Inverse()"> </td> 
+          </tr>  
+          <tr> 
+            <td> <input type="button" name="but7" id="b11" value="   7   " onClick="EnterDigit('7')"> </td>
+            <td> <input type="button" name="but8" id="b12" value="   8   " onClick="EnterDigit('8')"> </td>
+            <td> <input type="button" name="but9" id="b13" value="   9   " onClick="EnterDigit('9')"> </td>
+            <td> <input type="button" name="min" id="b14" value="    -     " onClick="Operation('-')"> </td>
+            <td> <input type="button" name="sqrt" id="b15" value="  sqrt  " onClick="SQRT()"> </td>
+          </tr>
+          <tr> 
+            <td> <input type="button" name="change" id="b16" value="  +/-  " onClick="ChangeSign()"> </td>
+            <td> <input type="button" name="but0" id="b17" value="   0   " onClick="EnterDigit('0')"></td>
+            <td> <input type="button" name="pnt" id="b18" value="   .    " onClick="putDot()"> </td>
+			<td> <input name="plus" id="b19" type="button" value="    +    " onClick="Operation('+')"> </td>
+			<td> <input type="button" name="equ" id="b20" value="     =    " onClick="Answer()"> </td>              
+          </tr>
+        </table>
+</td></tr>
+</table>
+<br>
+</form>
+</body>
+</html>
+			

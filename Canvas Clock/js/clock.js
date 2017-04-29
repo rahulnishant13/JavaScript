@@ -1,7 +1,8 @@
 	var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
     var myMusic = document.getElementById("myAudio");
-    
+    var minutes;
+	
     ctx.strokeStyle = '#99FF00';
     ctx.lineWidth = 17;
     ctx.lineCap = 'round';
@@ -15,10 +16,9 @@ function degToRad(degree){
 }
 
 function playMusic(){
-    if( (time > 1 || time < 24) && (minutes == 20) ){
-    	myMusic.play();
+    if( minutes <= 1 ){
+    	new Audio(myMusic.src).play();
     }
-    
 }
 
 function renderTime(){
@@ -27,7 +27,7 @@ function renderTime(){
 	var today = now.toDateString();
 	var time = now.toLocaleTimeString();
 	var hours = now.getHours();
-	var minutes = now.getMinutes();
+	minutes = now.getMinutes();
 	var sec = now.getSeconds();
 	var milliseconds = now.getMilliseconds();
 	var newSec = sec + (milliseconds / 1000);
@@ -61,5 +61,8 @@ function renderTime(){
     ctx.font = '25px Arial';
     ctx.fillText(time, 175, 200);
 }
+
 setInterval(renderTime, 40);
-playMusic();
+setInterval(playMusic, 20000);
+
+
